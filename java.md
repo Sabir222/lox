@@ -22,7 +22,17 @@ run(new String(bytes, Charset.defaultCharset()));
 ```
 
 ```java
+  private static void runPrompt() throws IOException {
+    InputStreamReader input = new InputStreamReader(System.in);
+    BufferedReader reader = new BufferedReader(input);
 
+    for (;;) {
+      System.out.print("> ");
+      String line = reader.readLine();
+      if (line == null) break;
+      run(line);
+    }
+  }
 ```
 
 ```java

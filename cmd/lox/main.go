@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -26,6 +28,23 @@ func runFile(path string) error {
 	return nil
 }
 
-func runPrompt() {
-	fmt.Print("this is runPrompt func\n")
+func runPrompt() error {
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Print("> ")
+		line, err := reader.ReadString('\n')
+		if err != nil {
+			return fmt.Errorf("Failed to read input : %w", err)
+		}
+		// convert CRLF to LF
+
+		line = strings.TrimSuffix(line, "\r\n") // Handles CRLF (Windows)
+		line = strings.TrimSuffix(line, "\n")   // Handles LF (Unix)
+		if len(line) == 0 {
+			break
+		}
+		fmt.Println(line)
+		// run(line)
+	}
+	return nil
 }
