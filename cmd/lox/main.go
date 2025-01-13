@@ -12,9 +12,14 @@ func main() {
 	if len(args) > 1 {
 		fmt.Println("Usage: jlox [script]")
 	} else if len(args) == 1 {
-		runFile(args[0])
+		if err := runFile(args[0]); err != nil {
+			fmt.Fprintf(os.Stderr, "Error : %v\n", err)
+			os.Exit(1)
+		}
 	} else {
-		runPrompt()
+		if err := runPrompt(); err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		}
 	}
 }
 
